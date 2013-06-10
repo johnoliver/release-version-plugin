@@ -51,13 +51,21 @@ public abstract class AbstractVersionModMojo extends AbstractMojo {
 	private String versionsPluginVersion;
 
 	/**
+	 * The version number of the scm plugin to back onto
+	 *
+	 * @parameter default-value="1.8.1"
+	 */
+	protected String scmPluginVersion;
+	
+
+	/**
 	 * The Maven Session Object
 	 * 
 	 * @parameter property="session"
 	 * @required
 	 * @readonly
 	 */
-	private MavenSession session;
+	protected MavenSession session;
 
 	/**
 	 * The Maven PluginManager component.
@@ -65,7 +73,7 @@ public abstract class AbstractVersionModMojo extends AbstractMojo {
 	 * @component
 	 * @required
 	 */
-	private BuildPluginManager pluginManager;
+	protected BuildPluginManager pluginManager;
 
 	public void writeVersion(ArtifactVersion newVersion) throws MojoExecutionException {
 
