@@ -20,9 +20,9 @@ This updates the version of the current project to the next snapshot.
 A typical deployment would be:
 
 ```
-mvn org.jclarity:release-version:release-versions
+mvn jo.release:release-version:release-versions
 mvn clean deploy
-mvn clean org.jclarity:release-version:snapshot-versions
+mvn clean jo.release:release-version:snapshot-versions
 ```
 
 Of course you can add it to the build section of your pom to reduce the command line:
