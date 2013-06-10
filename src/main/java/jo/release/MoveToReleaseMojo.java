@@ -45,17 +45,15 @@ public class MoveToReleaseMojo extends AbstractVersionModMojo {
 	 * @parameter
 	 */
 	protected boolean tag = true;
-	
 
-    /**
-     * Base directory of the project.
-     *
-     * @parameter default-value="${basedir}"
-     * @required
-     * @readonly
-     */
-    private File basedir;
-
+	/**
+	 * Base directory of the project.
+	 * 
+	 * @parameter default-value="${basedir}"
+	 * @required
+	 * @readonly
+	 */
+	private File basedir;
 	
 	public void execute() throws MojoExecutionException {
 
@@ -68,7 +66,6 @@ public class MoveToReleaseMojo extends AbstractVersionModMojo {
         writeVersion(newVersion);
         tag(newVersion.toString());
 	}
-
 
 	private void tag(String newVersion) throws MojoExecutionException {
 		
