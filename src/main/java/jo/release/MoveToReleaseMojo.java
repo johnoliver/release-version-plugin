@@ -95,7 +95,7 @@ public class MoveToReleaseMojo extends AbstractVersionModMojo {
 			goal("tag"), 
 			configuration(
 			        element(name("basedir"), basedir.getAbsolutePath()),
-			        element(name("tag"), project.getName()+"-"+newVersion)
+			        element(name("tag"), project.getArtifactId()+"-"+newVersion)
 			        ),
 			executionEnvironment(project, session, pluginManager));
 		
