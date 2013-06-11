@@ -8,8 +8,7 @@ This project contains two goals.
 ## release-versions 
 
 This moves versions in the project to release versions. When updating the 
-parent versions and versions specified in properties it will update to the latest available 
-release. 
+parent versions it will update to the latest available release. 
 
 ## snapshot-versions
 
@@ -20,9 +19,9 @@ This updates the version of the current project to the next snapshot.
 A typical deployment would be:
 
 ```
-mvn jo.release:release-version:release-versions
+mvn jo.release:release-version-plugin:release-versions
 mvn clean deploy
-mvn clean jo.release:release-version:snapshot-versions
+mvn clean jo.release:release-version-plugin:snapshot-versions
 ```
 
 Of course you can add it to the build section of your pom to reduce the command line:
