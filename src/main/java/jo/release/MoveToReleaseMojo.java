@@ -16,19 +16,6 @@ package jo.release;
  limitations under the License.
  */
 
-import static org.twdata.maven.mojoexecutor.MojoExecutor.artifactId;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.configuration;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.element;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.executeMojo;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.executionEnvironment;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.goal;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.groupId;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.name;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.plugin;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.version;
-
-import java.io.File;
-
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.plugin.MojoExecutionException;
 
@@ -38,22 +25,6 @@ import org.apache.maven.plugin.MojoExecutionException;
  */
 
 public class MoveToReleaseMojo extends AbstractVersionModMojo {
-
-	/**
-	 * Whether or not to commit and tag the release in the scm
-	 * 
-	 * @parameter
-	 */
-	protected boolean tag = true;
-
-	/**
-	 * Base directory of the project.
-	 * 
-	 * @parameter default-value="${basedir}"
-	 * @required
-	 * @readonly
-	 */
-	private File basedir;
 	
 	public void execute() throws MojoExecutionException {
 
@@ -64,40 +35,6 @@ public class MoveToReleaseMojo extends AbstractVersionModMojo {
 						        			 artifactVersion.getBuildNumber(),
 						        			 null);
         writeVersion(newVersion);
-        tag(newVersion.toString());
 	}
 
-	private void tag(String newVersion) throws MojoExecutionException {
-		
-		boolean isRootProject = session.getExecutionRootDirectory().equalsIgnoreCase(basedir.toString());
-        if(!tag || !isRootProject) {
-        	return;
-        }
-        
-        // Commit the version bump
-		String message = "Move to release versions for release " + newVersion; 
-		executeMojo(
-			plugin( groupId("org.apache.maven.plugins"),
-					artifactId("maven-scm-plugin"),
-					version(scmPluginVersion)),
-			goal("checkin"), 
-			configuration(
-			        element(name("basedir"), basedir.getAbsolutePath()),
-			        element(name("message"), message)
-			        ),
-			executionEnvironment(project, session, pluginManager));
-		 
-		//Commit tag
-		executeMojo(
-			plugin( groupId("org.apache.maven.plugins"),
-					artifactId("maven-scm-plugin"),
-					version(scmPluginVersion)),
-			goal("tag"), 
-			configuration(
-			        element(name("basedir"), basedir.getAbsolutePath()),
-			        element(name("tag"), project.getArtifactId()+"-"+newVersion)
-			        ),
-			executionEnvironment(project, session, pluginManager));
-		
-	}
 }
