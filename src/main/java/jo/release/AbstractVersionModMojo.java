@@ -46,14 +46,14 @@ public abstract class AbstractVersionModMojo extends AbstractMojo {
 	/**
 	 * The version number of the versions plugin to back onto
 	 *
-	 * @parameter default-value="2.0"
+	 * @parameter expression="${versionsVersion}" default-value="2.0"
 	 */
-	private String versionsPluginVersion;
+	protected String versionsPluginVersion;
 
 	/**
 	 * The version number of the scm plugin to back onto
 	 *
-	 * @parameter default-value="1.8.1"
+	 * @parameter expression="${scmVersion}" default-value="1.8.1"
 	 */
 	protected String scmPluginVersion;
 	

@@ -16,6 +16,15 @@ package jo.release;
  limitations under the License.
  */
 
+import static org.twdata.maven.mojoexecutor.MojoExecutor.artifactId;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.configuration;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.executeMojo;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.executionEnvironment;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.goal;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.groupId;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.plugin;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.version;
+
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.plugin.MojoExecutionException;
 
@@ -23,18 +32,34 @@ import org.apache.maven.plugin.MojoExecutionException;
  * @goal release-versions
  * @execute lifecycle="release-versions" phase="initialize"
  */
-
 public class MoveToReleaseMojo extends AbstractVersionModMojo {
-	
-	public void execute() throws MojoExecutionException {
 
-        ArtifactVersion artifactVersion = new Version( project.getVersion() );
-        Version newVersion = new Version(    artifactVersion.getMajorVersion(), 
-						        			 artifactVersion.getMinorVersion(),
-						        			 artifactVersion.getIncrementalVersion(),
-						        			 artifactVersion.getBuildNumber(),
-						        			 null);
-        writeVersion(newVersion);
+	/**
+	 * Weather or not to update versions held in properties too. Careful with
+	 * this, it will aggressively update to the most recent version available
+	 * for that dependency.
+	 * 
+	 * @parameter expression="${includeProperties}" default-value="false"
+	 */
+	public Boolean includeProperties = false;
+
+	public void execute() throws MojoExecutionException {
+		if(includeProperties) {
+			executeMojo(
+				plugin( groupId("org.codehaus.mojo"),
+						artifactId("versions-maven-plugin"),
+						version(versionsPluginVersion)),
+				goal("update-properties"), 
+				configuration(),
+				executionEnvironment(project, session, pluginManager));
+		}
+
+		ArtifactVersion artifactVersion = new Version(project.getVersion());
+		Version newVersion = new Version(artifactVersion.getMajorVersion(),
+				artifactVersion.getMinorVersion(),
+				artifactVersion.getIncrementalVersion(),
+				artifactVersion.getBuildNumber(), null);
+		writeVersion(newVersion);
 	}
 
 }

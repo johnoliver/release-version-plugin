@@ -41,7 +41,7 @@ public class TagReleaseMojo extends AbstractVersionModMojo {
 	/**
 	 * Base directory of the project.
 	 * 
-	 * @parameter default-value="${basedir}"
+	 * @parameter expression="${gitDir}" default-value="${basedir}"
 	 * @required
 	 * @readonly
 	 */
