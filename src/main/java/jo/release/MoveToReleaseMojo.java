@@ -39,7 +39,7 @@ public class MoveToReleaseMojo extends AbstractVersionModMojo {
 	 * this, it will aggressively update to the most recent version available
 	 * for that dependency.
 	 * 
-	 * @parameter expression="${includeProperties}" default-value="false"
+	 * @parameter property="includeProperties" default-value="false"
 	 */
 	public Boolean includeProperties = false;
 
