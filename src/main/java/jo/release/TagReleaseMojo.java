@@ -41,7 +41,7 @@ public class TagReleaseMojo extends AbstractVersionModMojo {
 	/**
 	 * Base directory of the project.
 	 * 
-	 * @parameter property="gitDir" default-value="${basedir}"
+	 * @parameter property="rv.gitDir" default-value="${basedir}"
 	 * @required
 	 * @readonly
 	 */
@@ -58,19 +58,6 @@ public class TagReleaseMojo extends AbstractVersionModMojo {
         	return;
         }
 
-        // Commit the version bump
-		String message = "Move to release versions for release " + project.getVersion(); 
-		executeMojo(
-			plugin( groupId("org.apache.maven.plugins"),
-					artifactId("maven-scm-plugin"),
-					version(scmPluginVersion)),
-			goal("checkin"), 
-			configuration(
-			        element(name("basedir"), basedir.getAbsolutePath()),
-			        element(name("message"), message)
-			        ),
-			executionEnvironment(project, session, pluginManager));
-		 
 		//Commit tag
 		executeMojo(
 			plugin( groupId("org.apache.maven.plugins"),

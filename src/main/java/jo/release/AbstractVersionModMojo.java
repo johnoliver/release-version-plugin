@@ -37,7 +37,7 @@ import org.apache.maven.project.MavenProject;
 public abstract class AbstractVersionModMojo extends AbstractMojo {
 
 	/**
-	 * @parameter default-value="${project}"
+	 * @parameter property="project"
 	 * @required
 	 * @readonly
 	 */
@@ -46,20 +46,19 @@ public abstract class AbstractVersionModMojo extends AbstractMojo {
 	/**
 	 * The version number of the versions plugin to back onto
 	 *
-	 * @parameter property="versionsVersion" default-value="2.0"
+	 * @parameter property="rv.versionsVersion" default-value="2.1"
 	 */
 	protected String versionsPluginVersion;
 
 	/**
 	 * The version number of the scm plugin to back onto
 	 *
-	 * @parameter property="scmVersion" default-value="1.8.1"
+	 * @parameter property="rv.scmVersion" default-value="1.8.1"
 	 */
 	protected String scmPluginVersion;
-	
 
 	/**
-	 * The Maven Session Object
+	 * The current Maven session.
 	 * 
 	 * @parameter property="session"
 	 * @required
@@ -68,7 +67,7 @@ public abstract class AbstractVersionModMojo extends AbstractMojo {
 	protected MavenSession session;
 
 	/**
-	 * The Maven PluginManager component.
+	 * The Maven BuildPluginManager component.
 	 * 
 	 * @component
 	 * @required
@@ -76,7 +75,6 @@ public abstract class AbstractVersionModMojo extends AbstractMojo {
 	protected BuildPluginManager pluginManager;
 
 	public void writeVersion(ArtifactVersion newVersion) throws MojoExecutionException {
-
         if ( project.getOriginalModel().getVersion() != null ) {
 			executeMojo(
 					plugin( groupId("org.codehaus.mojo"),
@@ -88,5 +86,15 @@ public abstract class AbstractVersionModMojo extends AbstractMojo {
 					        ),
 					executionEnvironment(project, session, pluginManager));
         }
+	}
+
+	public void bumpProperties() throws MojoExecutionException {
+		executeMojo(
+			plugin( groupId("org.codehaus.mojo"),
+					artifactId("versions-maven-plugin"),
+					version(versionsPluginVersion)),
+			goal("update-properties"), 
+			configuration(),
+			executionEnvironment(project, session, pluginManager));
 	}
 }

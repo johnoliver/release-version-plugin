@@ -16,15 +16,6 @@ package jo.release;
  limitations under the License.
  */
 
-import static org.twdata.maven.mojoexecutor.MojoExecutor.artifactId;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.configuration;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.executeMojo;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.executionEnvironment;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.goal;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.groupId;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.plugin;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.version;
-
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.plugin.MojoExecutionException;
 
@@ -39,19 +30,13 @@ public class MoveToReleaseMojo extends AbstractVersionModMojo {
 	 * this, it will aggressively update to the most recent version available
 	 * for that dependency.
 	 * 
-	 * @parameter property="includeProperties" default-value="false"
+	 * @parameter property="rv.processProperties" default-value="false"
 	 */
-	public Boolean includeProperties = false;
+	public Boolean processProperties = false;
 
 	public void execute() throws MojoExecutionException {
-		if(includeProperties) {
-			executeMojo(
-				plugin( groupId("org.codehaus.mojo"),
-						artifactId("versions-maven-plugin"),
-						version(versionsPluginVersion)),
-				goal("update-properties"), 
-				configuration(),
-				executionEnvironment(project, session, pluginManager));
+		if(processProperties) {
+			bumpProperties();
 		}
 
 		ArtifactVersion artifactVersion = new Version(project.getVersion());
