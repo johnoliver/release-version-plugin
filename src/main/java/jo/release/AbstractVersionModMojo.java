@@ -27,6 +27,10 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.name;
 import static org.twdata.maven.mojoexecutor.MojoExecutor.plugin;
 import static org.twdata.maven.mojoexecutor.MojoExecutor.version;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
@@ -74,6 +78,15 @@ public abstract class AbstractVersionModMojo extends AbstractMojo {
 	 */
 	protected BuildPluginManager pluginManager;
 
+	/**
+	 * Base directory of the project.
+	 * 
+	 * @parameter property="rv.gitDir" default-value="${basedir}"
+	 * @required
+	 * @readonly
+	 */
+	protected File basedir;
+
 	public void writeVersion(ArtifactVersion newVersion) throws MojoExecutionException {
         if ( project.getOriginalModel().getVersion() != null ) {
 			executeMojo(
@@ -96,5 +109,24 @@ public abstract class AbstractVersionModMojo extends AbstractMojo {
 			goal("update-properties"), 
 			configuration(),
 			executionEnvironment(project, session, pluginManager));
+	}
+
+	public void executeStandardUpdateGoals() throws MojoExecutionException {
+		List<String> goals = Arrays.asList("update-parent", "update-child-modules", "use-releases");
+		for(String goal : goals) {			
+			executeMojo(
+					plugin( groupId("org.codehaus.mojo"),
+							artifactId("versions-maven-plugin"),
+							version(versionsPluginVersion)),
+							goal(goal), 
+							configuration(),
+							executionEnvironment(project, session, pluginManager));
+		}
+		
+	}
+	
+
+	protected boolean isRootProject() {
+		return session.getExecutionRootDirectory().equalsIgnoreCase(basedir.toString());
 	}
 }

@@ -27,8 +27,6 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.name;
 import static org.twdata.maven.mojoexecutor.MojoExecutor.plugin;
 import static org.twdata.maven.mojoexecutor.MojoExecutor.version;
 
-import java.io.File;
-
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
@@ -38,23 +36,12 @@ import org.apache.maven.plugin.MojoExecutionException;
 
 public class TagReleaseMojo extends AbstractVersionModMojo {
 
-	/**
-	 * Base directory of the project.
-	 * 
-	 * @parameter property="rv.gitDir" default-value="${basedir}"
-	 * @required
-	 * @readonly
-	 */
-	private File basedir;
-	
 	public void execute() throws MojoExecutionException {
         tag();
 	}
 
 	private void tag() throws MojoExecutionException {
-		
-		boolean isRootProject = session.getExecutionRootDirectory().equalsIgnoreCase(basedir.toString());
-        if(!isRootProject) {
+        if(!isRootProject()) {
         	return;
         }
 

@@ -16,12 +16,14 @@ package jo.release;
  limitations under the License.
  */
 
+import java.io.File;
+
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  * @goal release-versions
- * @execute lifecycle="release-versions" phase="initialize"
+ * @aggregator
  */
 public class MoveToReleaseMojo extends AbstractVersionModMojo {
 
@@ -35,9 +37,15 @@ public class MoveToReleaseMojo extends AbstractVersionModMojo {
 	public Boolean processProperties = false;
 
 	public void execute() throws MojoExecutionException {
+        if(!isRootProject()) {
+        	return;
+        }
+        
 		if(processProperties) {
 			bumpProperties();
 		}
+
+		executeStandardUpdateGoals();
 
 		ArtifactVersion artifactVersion = new Version(project.getVersion());
 		Version newVersion = new Version(artifactVersion.getMajorVersion(),
@@ -45,6 +53,7 @@ public class MoveToReleaseMojo extends AbstractVersionModMojo {
 				artifactVersion.getIncrementalVersion(),
 				artifactVersion.getBuildNumber(), null);
 		writeVersion(newVersion);
+	
 	}
 
 }
