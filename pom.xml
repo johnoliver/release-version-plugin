@@ -3,7 +3,7 @@
 
 	<groupId>jo.release</groupId>
 	<artifactId>release-version-plugin</artifactId>
-	<version>1.1.6-SNAPSHOT</version>
+	<version>1.1.6</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>Release Version Plugin</name>
