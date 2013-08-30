@@ -21,11 +21,14 @@ import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  * @goal snapshot-versions
- * @execute phase="initialize"
+ * @aggregator
  */
 public class MoveToSnapshotMojo extends AbstractVersionModMojo {
 
 	public void execute() throws MojoExecutionException {
+        if(!isRootProject()) {
+        	return;
+        }
 
         ArtifactVersion artifactVersion = new Version( project.getVersion() );
         Version newVersion = new Version(    artifactVersion.getMajorVersion(), 

@@ -31,7 +31,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  * @goal tag-release
- * @execute phase="initialize"
+ * @aggregator
  */
 
 public class TagReleaseMojo extends AbstractVersionModMojo {

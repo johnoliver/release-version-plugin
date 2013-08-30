@@ -16,8 +16,6 @@ package jo.release;
  limitations under the License.
  */
 
-import java.io.File;
-
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.plugin.MojoExecutionException;
 
