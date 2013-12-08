@@ -32,11 +32,11 @@ PLUGIN_VERSION=1.1.6
 git checkout master
 git pull origin master
 mvn clean
-mvn jo.release:release-version-plugin:$PLUGIN_VERSION:release-versions -Drv.processProperties=true
+mvn com.insightfullogic.release:release-version-plugin:$PLUGIN_VERSION:release-versions -Drv.processProperties=true
 mvn clean deploy -DupdateReleaseInfo=true
 git commit --allow-empty -a -m "Move to release versions"
-mvn jo.release:release-version-plugin:$PLUGIN_VERSION:tag-release
-mvn jo.release:release-version-plugin:$PLUGIN_VERSION:snapshot-versions
+mvn com.insightfullogic.release:release-version-plugin:$PLUGIN_VERSION:tag-release
+mvn com.insightfullogic.release:release-version-plugin:$PLUGIN_VERSION:snapshot-versions
 git commit --allow-empty -a -m "Move to snapshot versions"
 git push origin master
 ```
