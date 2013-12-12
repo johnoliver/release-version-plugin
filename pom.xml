@@ -9,7 +9,7 @@
 
 	<groupId>com.insightfullogic.release</groupId>
 	<artifactId>release-version-plugin</artifactId>
-	<version>1.1.7</version>
+	<version>1.1.8-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>Release Version Plugin</name>
