@@ -3,6 +3,8 @@ release-version-plugin
 
 Some helpful plugins for bumping versions for release and to the next snapshot version. Allowing releases with only a single full build lifecycle and avoiding the repeated builds of the standard release plugin.
 
+This project is still somewhat in beta stages. Although this has proven to work well with versions defined via properties, some issues have been found, particularly bumping `SNAPSHOT` versions defined in the `<dependency>` section that refer to modules within the same reactor build.
+
 This project contains two goals. 
 
 ## release-versions 
