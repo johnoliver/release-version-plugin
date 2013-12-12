@@ -1,5 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 
 	<groupId>com.insightfullogic.release</groupId>
 	<artifactId>release-version-plugin</artifactId>
@@ -7,7 +14,7 @@
 	<packaging>maven-plugin</packaging>
 
 	<name>Release Version Plugin</name>
-	
+
 	<description>A set of useful goals for the bumping of releases in order to perform lightweight releases</description>
 
 	<properties>
@@ -83,7 +90,6 @@
 		<connection>scm:git:git@github.com:johnoliver/release-version-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:johnoliver/release-version-plugin.git</developerConnection>
 		<url>https://github.com/johnoliver/release-version-plugin</url>
-		<tag>HEAD</tag>
 	</scm>
 </project>
 
