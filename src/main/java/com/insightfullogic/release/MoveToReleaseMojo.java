@@ -21,7 +21,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  * @goal release-versions
- * @aggregator
  */
 public class MoveToReleaseMojo extends AbstractVersionModMojo {
 
@@ -35,10 +34,6 @@ public class MoveToReleaseMojo extends AbstractVersionModMojo {
 	public Boolean processProperties = false;
 
 	public void execute() throws MojoExecutionException {
-        if(!isRootProject()) {
-        	return;
-        }
-        
 		if(processProperties) {
 			bumpProperties();
 		}
